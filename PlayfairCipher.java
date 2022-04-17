@@ -49,7 +49,7 @@ parse = parse.replaceAll("[^A-Z]", "");
 //replace the letter J by I  
 parse = parse.replace("J", "I");  
 return parse;  
-}  
+} 
 //creates the cipher table based on some input string (already parsed)  
 private String[][] cipherTable(String key)  
 {  

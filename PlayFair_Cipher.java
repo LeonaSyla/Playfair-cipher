@@ -116,3 +116,78 @@ for(int k = 0; k < length; k++)
 out = out + encDigraphs[k];  
 return out;  
 }  
+//---------------encryption logic-----------------  
+//encodes the digraph input with the cipher's specifications  
+private String[] encodeDigraph(String di[])  
+{  
+String[] encipher = new String[length];  
+for(int i = 0; i < length; i++)  
+{  
+char a = di[i].charAt(0);  
+char b = di[i].charAt(1);  
+int r1 = (int) getPoint(a).getX();  
+int r2 = (int) getPoint(b).getX();  
+int c1 = (int) getPoint(a).getY();  
+int c2 = (int) getPoint(b).getY();  
+//executes if the letters of digraph appear in the same row  
+//in such case shift columns to right  
+if(r1 == r2)  
+{  
+c1 = (c1 + 1) % 5;  
+c2 = (c2 + 1) % 5;  
+}  
+//executes if the letters of digraph appear in the same column  
+//in such case shift rows down  
+else if(c1 == c2)  
+{  
+r1 = (r1 + 1) % 5;  
+r2 = (r2 + 1) % 5;  
+}  
+//executes if the letters of digraph appear in the different row and different column  
+//in such case swap the first column with the second column  
+else  
+{  
+int temp = c1;  
+c1 = c2;  
+c2 = temp;  
+}  
+//performs the table look-up and puts those values into the encoded array  
+encipher[i] = table[r1][c1] + "" + table[r2][c2];  
+}  
+return encipher;  
+}  
+//-----------------------decryption logic---------------------  
+// decodes the output given from the cipher and decode methods (opp. of encoding process)  
+private String decode(String out)  
+{  
+String decoded = "";  
+for(int i = 0; i < out.length() / 2; i++)  
+{  
+char a = out.charAt(2*i);  
+char b = out.charAt(2*i+1);  
+int r1 = (int) getPoint(a).getX();  
+int r2 = (int) getPoint(b).getX();  
+int c1 = (int) getPoint(a).getY();  
+int c2 = (int) getPoint(b).getY();  
+if(r1 == r2)  
+{  
+c1 = (c1 + 4) % 5;  
+c2 = (c2 + 4) % 5;  
+}  
+else if(c1 == c2)  
+{  
+r1 = (r1 + 4) % 5;  
+r2 = (r2 + 4) % 5;  
+}  
+else  
+{  
+//swapping logic      
+int temp = c1;  
+c1 = c2;  
+c2 = temp;  
+}  
+decoded = decoded + table[r1][c1] + table[r2][c2];  
+}  
+//returns the decoded message  
+return decoded;  
+}	

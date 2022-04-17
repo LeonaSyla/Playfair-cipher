@@ -1,5 +1,6 @@
 package ushtrimi1;
 
+
 import java.awt.Point;  
 import java.util.Scanner;  
 public class playfair  
